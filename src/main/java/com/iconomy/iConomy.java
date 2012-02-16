@@ -40,8 +40,6 @@ import com.iConomy.util.Downloader;
 import com.iConomy.util.FileManager;
 import com.iConomy.util.Misc;
 
-import com.nijiko.permissions.PermissionHandler;
-import com.nijikokun.bukkit.Permissions.Permissions;
 import java.text.DecimalFormat;
 import org.bukkit.event.server.PluginEnableEvent;
 
@@ -73,7 +71,6 @@ public class iConomy extends JavaPlugin {
     private static Server Server = null;
     private static Database Database = null;
     private static Transactions Transactions = null;
-    private static PermissionHandler Permissions = null;
     private static Players playerListener = null;
     private static Timer Interest_Timer = null;
 
@@ -176,7 +173,6 @@ public class iConomy extends JavaPlugin {
 
         // Event Registration
         getServer().getPluginManager().registerEvent(Event.Type.PLAYER_JOIN, playerListener, Priority.Normal, this);
-        getServer().getPluginManager().registerEvent(Event.Type.PLUGIN_ENABLE, new Listener(this), Priority.Monitor, this);
         
         // Console Detail
         System.out.println("[iConomy] v" + pdfFile.getVersion() + " (" + Constants.Codename + ") loaded.");
@@ -202,7 +198,6 @@ public class iConomy extends JavaPlugin {
             Banks = null;
             Accounts = null;
             Database = null;
-            Permissions = null;
             Transactions = null;
             playerListener = null;
             Interest_Timer = null;
@@ -478,15 +473,6 @@ public class iConomy extends JavaPlugin {
     public static Transactions getTransactions() {
         return Transactions;
     }
-
-    /**
-     * Get the PermissionHandler
-     * @return PermissionHandler or Null depending on Plugin state.
-     */
-    public static PermissionHandler getPermissions() {
-        return Permissions;
-    }
-
     /**
      * Check and see if the sender has the permission as designated by node.
      *
@@ -495,16 +481,7 @@ public class iConomy extends JavaPlugin {
      * @return boolean
      */
     public static boolean hasPermissions(CommandSender sender, String node) {
-        if(sender instanceof Player) {
-            Player player = (Player)sender;
-            if(Permissions != null)
-                return Permissions.permission(player, node);
-            else {
-                return player.isOp();
-            }
-        }
-
-        return true;
+        return sender.hasPermission(node);
     }
 
     /**
@@ -513,28 +490,5 @@ public class iConomy extends JavaPlugin {
      */
     public static Server getBukkitServer() {
         return Server;
-    }
-
-    private class Listener extends ServerListener {
-
-        private iConomy plugin;
-
-        public Listener(iConomy thisPlugin) {
-            this.plugin = thisPlugin;
-        }
-
-        @Override
-        public void onPluginEnable(PluginEnableEvent event) {
-            if (plugin.Permissions == null) {
-                Plugin Permissions = plugin.getServer().getPluginManager().getPlugin("Permissions");
-
-                if (Permissions != null) {
-                    if (Permissions.isEnabled()) {
-                        plugin.Permissions = (((Permissions)Permissions).getHandler());
-                        System.out.println("[iConomy] hooked into Permissions.");
-                    }
-                }
-            }
-        }
     }
 }
