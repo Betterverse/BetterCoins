@@ -1799,21 +1799,6 @@ public class Players extends PlayerListener {
                         double amount = 0.0;
 
                         if(split[2].startsWith("g:")) {
-                            if(iConomy.getPermissions() == null) {
-                                Messaging.send(Messaging.colorize("<rose>Sorry, you need permissions to use this feature.")); return;
-                            }
-
-                            if(iConomy.getBukkitServer().getOnlinePlayers().length < 1) {
-                                Messaging.send(Template.color("error.online")); return;
-                            }
-
-                            String group = split[2].substring(2);
-
-                            for(Player p : iConomy.getBukkitServer().getOnlinePlayers()) {
-                                if(iConomy.getPermissions().inGroup(p.getWorld().getName(), p.getName(), group)) {
-                                    accounts.add(p.getName());
-                                }
-                            }
                         } else {
                             Player check = Misc.playerMatch(split[2]);
                             String name = "";
