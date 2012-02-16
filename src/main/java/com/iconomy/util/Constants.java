@@ -2,10 +2,10 @@ package com.iConomy.util;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
-
-import org.bukkit.util.config.Configuration;
+import org.bukkit.configuration.file.YamlConfiguration;
 
 public class Constants {
     // Code name
@@ -102,23 +102,22 @@ public class Constants {
     public static String SQLDatabase = "minecraft";
     public static String SQLTable = "iConomy";
 
-    public static void load(Configuration config) {
-        config.load();
+    public static void load(YamlConfiguration config) {
 
         Major.add("Dollar"); Major.add("Dollars"); BankMajor.add("Dollar"); BankMajor.add("Dollars");
         Minor.add("Coin"); Minor.add("Coins"); BankMinor.add("Coin"); BankMinor.add("Coins");
 
         // System Configuration
-        Major = config.getStringList("System.Default.Currency.Major", Major);
-        Minor = config.getStringList("System.Default.Currency.Minor", Minor);
+        Major = convertTheList(config.getList("System.Default.Currency.Major", Major));
+        Minor = convertTheList(config.getList("System.Default.Currency.Minor", Minor));
         Holdings = config.getDouble("System.Default.Account.Holdings", Holdings);
 
         // System Bank
         Banking = config.getBoolean("System.Banking.Enabled", Banking);
         BankingMultiple = config.getBoolean("System.Banking.Accounts.Multiple", BankingMultiple);
         BankName = config.getString("System.Default.Bank.Name", BankName);
-        BankMajor = config.getStringList("System.Default.Bank.Currency.Major", BankMajor);
-        BankMinor = config.getStringList("System.Default.Bank.Currency.Minor", BankMinor);
+        BankMajor = convertTheList(config.getList("System.Default.Bank.Currency.Major", BankMajor));
+        BankMinor = convertTheList(config.getList("System.Default.Bank.Currency.Minor", BankMinor));
         BankHoldings = config.getDouble("System.Default.Bank.Account.Holdings", BankHoldings);
         BankFee = config.getDouble("System.Default.Bank.Account.Fee", BankFee);
 
@@ -156,7 +155,7 @@ public class Constants {
         int i = 0;
 
         for(String node : nodes) {
-            if(config.getProperty(node.split(":")[0]) == null) {
+            if(config.get(node.split(":")[0]) == null) {
                 i++;
             }
         }
@@ -165,7 +164,7 @@ public class Constants {
             System.out.println("[iConomy] Configuration Integrity Start:");
 
             for(String node : nodes) {
-                if(config.getProperty(node.split(":")[0]) == null) {
+                if(config.get(node.split(":")[0]) == null) {
                     System.out.println("    - "+ node.split(":")[0] +" is null or missing, Defaulting to: " + node.split(":")[1]);
                 }
             }
@@ -173,4 +172,12 @@ public class Constants {
             System.out.println("[iConomy] Configuration Integrity End.");
         }
     }
+
+	private static List<String> convertTheList(List<Object> list) {
+		List<String> toRet = new ArrayList<String>();
+		for(Object ob:list) {
+			toRet.add((String)ob);
+		}
+		return toRet;
+	}
 }
