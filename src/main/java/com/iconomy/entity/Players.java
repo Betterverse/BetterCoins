@@ -20,12 +20,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Set;
+import org.bukkit.Bukkit;
 
 import org.bukkit.entity.Player;
 import org.bukkit.command.CommandSender;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerListener;
 
 /**
  * Handles the command usage and account creation upon a
@@ -33,7 +34,7 @@ import org.bukkit.event.player.PlayerListener;
  *
  * @author Nijikokun
  */
-public class Players extends PlayerListener {
+public class Players implements Listener{
     private Template Template = null;
 
     /**
@@ -42,8 +43,9 @@ public class Players extends PlayerListener {
      *
      * @param directory
      */
-    public Players(String directory) {
+    public Players(String directory,iConomy plugin) {
         this.Template = new Template(directory, "Template.yml");
+				Bukkit.getServer().getPluginManager().registerEvents(this, plugin);
     }
 
     /**
@@ -1130,7 +1132,7 @@ public class Players extends PlayerListener {
      * @param split The input line split by spaces.
      * @return <code>boolean</code> - True denotes that the command existed, false the command doesn't.
      */
-    @Override
+    @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
 

@@ -17,15 +17,10 @@ import java.util.Timer;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.Server;
-import org.bukkit.event.Event.Priority;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.util.config.Configuration;
-import org.bukkit.event.server.ServerListener;
-import org.bukkit.plugin.Plugin;
 
 import com.iConomy.entity.Players;
 import com.iConomy.net.Database;
@@ -41,6 +36,7 @@ import com.iConomy.util.FileManager;
 import com.iConomy.util.Misc;
 
 import java.text.DecimalFormat;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.event.server.PluginEnableEvent;
 
 /**
@@ -105,7 +101,7 @@ public class iConomy extends JavaPlugin {
         extract("Template.yml");
 
         try {
-            Constants.load(new Configuration(new File(getDataFolder(), "Config.yml")));
+            Constants.load(YamlConfiguration.loadConfiguration(new File(getDataFolder(), "Config.yml")));
         } catch (Exception e) {
             Server.getPluginManager().disablePlugin(this);
             System.out.println("[iConomy] Failed to retrieve configuration from directory.");
@@ -169,10 +165,7 @@ public class iConomy extends JavaPlugin {
         }
 
         // Initializing Listeners
-        playerListener = new Players(getDataFolder().getPath());
-
-        // Event Registration
-        getServer().getPluginManager().registerEvent(Event.Type.PLAYER_JOIN, playerListener, Priority.Normal, this);
+        playerListener = new Players(getDataFolder().getPath(),this);
         
         // Console Detail
         System.out.println("[iConomy] v" + pdfFile.getVersion() + " (" + Constants.Codename + ") loaded.");
