@@ -36,6 +36,7 @@ import com.iConomy.util.FileManager;
 import com.iConomy.util.Misc;
 
 import java.text.DecimalFormat;
+import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.event.server.PluginEnableEvent;
 
@@ -474,7 +475,10 @@ public class iConomy extends JavaPlugin {
      * @return boolean
      */
     public static boolean hasPermissions(CommandSender sender, String node) {
-        return sender.hasPermission(node);
+      if(!(sender.hasPermission(node)))   {
+				sender.sendMessage(ChatColor.RED+"[iConomy] You do not have a required permission: "+node+"!");
+			}
+			return sender.hasPermission(node);
     }
 
     /**
