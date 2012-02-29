@@ -1,22 +1,34 @@
 package com.iConomy.events;
 
 import org.bukkit.event.Event;
+import org.bukkit.event.HandlerList;
 
 public class AccountSetEvent extends Event {
-    private final String account;
-    private double balance;
 
-    public AccountSetEvent(String account, double balance) {
-        super("ACCOUNT_UPDATE");
-        this.account = account;
-        this.balance = balance;
-    }
+	private final String account;
+	private double balance;
+	private HandlerList handlers = new HandlerList();
 
-    public String getAccountName() {
-        return account;
-    }
+	public AccountSetEvent(String account, double balance) {
+		this.account = account;
+		this.balance = balance;
+	}
 
-    public double getBalance() {
-        return balance;
-    }
+	public String getAccountName() {
+		return account;
+	}
+
+	public double getBalance() {
+		return balance;
+	}
+
+	@Override
+	public HandlerList getHandlers() {
+		return handlers;
+	}
+
+	@Override
+	public String getEventName() {
+		return "ACCOUNT SET";
+	}
 }
