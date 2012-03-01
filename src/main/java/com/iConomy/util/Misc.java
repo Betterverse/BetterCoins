@@ -1,8 +1,8 @@
-package com.bettercoins.util;
+package com.iConomy.util;
 
 import org.bukkit.entity.Player;
 
-import com.bettercoins.BetterCoins;
+import com.iConomy.iConomy;
 import java.util.List;
 import org.bukkit.command.CommandSender;
 
@@ -107,7 +107,7 @@ public class Misc {
      * Get the player from the server (matched)
      */
     public static Player playerMatch(String name) {
-        Player[] online = BetterCoins.getBukkitServer().getOnlinePlayers();
+        Player[] online = iConomy.getBukkitServer().getOnlinePlayers();
         Player lastPlayer = null;
 
         for (Player player : online) {

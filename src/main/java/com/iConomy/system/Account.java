@@ -1,10 +1,10 @@
-package com.bettercoins.system;
+package com.iConomy.system;
 
-import com.bettercoins.events.AccountRemoveEvent;
+import com.iConomy.events.AccountRemoveEvent;
 import java.sql.ResultSet;
 
-import com.bettercoins.BetterCoins;
-import com.bettercoins.util.Constants;
+import com.iConomy.iConomy;
+import com.iConomy.util.Constants;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -24,7 +24,7 @@ public class Account {
         int id = -1;
 
         try {
-            conn = BetterCoins.getiCoDatabase().getConnection();
+            conn = iConomy.getiCoDatabase().getConnection();
             ps = conn.prepareStatement("SELECT * FROM " + Constants.SQLTable + " WHERE username = ? LIMIT 1");
             ps.setString(1, name);
             rs = ps.executeQuery();
@@ -62,11 +62,11 @@ public class Account {
         PreparedStatement ps = null;
 
         try {
-            conn = BetterCoins.getiCoDatabase().getConnection();
+            conn = iConomy.getiCoDatabase().getConnection();
             ps = conn.prepareStatement("INSERT INTO " + Constants.SQLTable + "_BankRelations (account_name, bank_id, holdings) VALUES (?, ?, ?)");
             ps.setString(1, this.name);
             ps.setInt(2, bankID);
-            ps.setDouble(2, BetterCoins.getBank(bankID).getInitialHoldings());
+            ps.setDouble(2, iConomy.getBank(bankID).getInitialHoldings());
             ps.executeUpdate();
         } catch (Exception e) {
             return false;
@@ -86,14 +86,14 @@ public class Account {
         ResultSet rs = null;
         PreparedStatement ps = null;
 
-        int bankID = BetterCoins.getBank(bank).getId();
+        int bankID = iConomy.getBank(bank).getId();
 
         try {
-            conn = BetterCoins.getiCoDatabase().getConnection();
+            conn = iConomy.getiCoDatabase().getConnection();
             ps = conn.prepareStatement("INSERT INTO " + Constants.SQLTable + "_BankRelations (account_name, bank_id, holdings) VALUES (?, ?, ?)");
             ps.setString(1, this.name);
             ps.setInt(2, bankID);
-            ps.setDouble(2, BetterCoins.getBank(bankID).getInitialHoldings());
+            ps.setDouble(2, iConomy.getBank(bankID).getInitialHoldings());
             ps.executeUpdate();
         } catch (Exception e) {
             return false;
@@ -118,7 +118,7 @@ public class Account {
         ArrayList<Bank> banks = new ArrayList<Bank>();
 
         try {
-            conn = BetterCoins.getiCoDatabase().getConnection();
+            conn = iConomy.getiCoDatabase().getConnection();
 
             ps = conn.prepareStatement("SELECT * FROM " + Constants.SQLTable + "_BankRelations WHERE account_name = ?");
             ps.setString(1, this.name);
@@ -142,8 +142,8 @@ public class Account {
     }
 
     public void setMainBank(String name) {
-        Bank bank = BetterCoins.Banks.get(name);
-        int id = BetterCoins.Banks.get(name).getId();
+        Bank bank = iConomy.Banks.get(name);
+        int id = iConomy.Banks.get(name).getId();
 
         if(bank.hasAccount(this.name)) {
             setMainBank(id);
@@ -154,7 +154,7 @@ public class Account {
         if(!Constants.Banking)
             return;
         
-        if(!BetterCoins.Banks.get(id).hasAccount(this.name))
+        if(!iConomy.Banks.get(id).hasAccount(this.name))
             return;
         
         Connection conn = null;
@@ -163,7 +163,7 @@ public class Account {
         Bank bank = null;
 
         try {
-            conn = BetterCoins.getiCoDatabase().getConnection();
+            conn = iConomy.getiCoDatabase().getConnection();
 
             ps = conn.prepareStatement("UPDATE " + Constants.SQLTable + "_BankRelations SET main = 0 WHERE account_name = ? AND main = 1");
             ps.setString(1, this.name);
@@ -195,7 +195,7 @@ public class Account {
         Bank bank = null;
 
         try {
-            conn = BetterCoins.getiCoDatabase().getConnection();
+            conn = iConomy.getiCoDatabase().getConnection();
 
             ps = conn.prepareStatement("SELECT * FROM " + Constants.SQLTable + "_BankRelations WHERE account_name = ? AND main = 1 LIMIT 1");
             ps.setString(1, this.name);
@@ -228,7 +228,7 @@ public class Account {
         BankAccount account = null;
 
         try {
-            conn = BetterCoins.getiCoDatabase().getConnection();
+            conn = iConomy.getiCoDatabase().getConnection();
 
             ps = conn.prepareStatement("SELECT * FROM " + Constants.SQLTable + "_BankRelations WHERE account_name = ? AND main = 1 LIMIT 1");
             ps.setString(1, this.name);
@@ -261,7 +261,7 @@ public class Account {
         ArrayList<BankAccount> banks = new ArrayList<BankAccount>();
 
         try {
-            conn = BetterCoins.getiCoDatabase().getConnection();
+            conn = iConomy.getiCoDatabase().getConnection();
 
             ps = conn.prepareStatement("SELECT * FROM " + Constants.SQLTable + "_BankRelations WHERE account_name = ?");
             ps.setString(1, this.name);
@@ -301,7 +301,7 @@ public class Account {
         PreparedStatement ps = null;
 
         try {
-            conn = BetterCoins.getiCoDatabase().getConnection();
+            conn = iConomy.getiCoDatabase().getConnection();
             ps = conn.prepareStatement("SELECT hidden FROM " + Constants.SQLTable + " WHERE username = ? LIMIT 1");
             ps.setString(1, this.name);
             rs = ps.executeQuery();
@@ -321,7 +321,7 @@ public class Account {
                 try { rs.close(); } catch (SQLException ex) { }
 
             if(conn != null)
-                BetterCoins.getiCoDatabase().close(conn);
+                iConomy.getiCoDatabase().close(conn);
         }
 
         return false;
@@ -333,7 +333,7 @@ public class Account {
         PreparedStatement ps = null;
 
         try {
-            conn = BetterCoins.getiCoDatabase().getConnection();
+            conn = iConomy.getiCoDatabase().getConnection();
 
             ps = conn.prepareStatement("UPDATE " + Constants.SQLTable + " SET hidden = ? WHERE username = ?");
             ps.setBoolean(1, hidden);
@@ -347,7 +347,7 @@ public class Account {
                 try { ps.close(); } catch (SQLException ex) { }
 
             if(conn != null)
-                BetterCoins.getiCoDatabase().close(conn);
+                iConomy.getiCoDatabase().close(conn);
         }
 
         return true;
@@ -367,7 +367,7 @@ public class Account {
         PreparedStatement ps = null;
 
         try {
-            conn = BetterCoins.getiCoDatabase().getConnection();
+            conn = iConomy.getiCoDatabase().getConnection();
             ps = conn.prepareStatement("SELECT * FROM " + Constants.SQLTable + " WHERE hidden = 0 ORDER BY balance DESC");
             rs = ps.executeQuery();
 
@@ -386,7 +386,7 @@ public class Account {
             if(rs != null)
                 try { rs.close(); } catch (SQLException ex) { }
 
-            BetterCoins.getiCoDatabase().close(conn);
+            iConomy.getiCoDatabase().close(conn);
         }
 
         return -1;
@@ -394,14 +394,14 @@ public class Account {
 
     public void remove() {
         AccountRemoveEvent Event = new AccountRemoveEvent(name);
-        BetterCoins.getBukkitServer().getPluginManager().callEvent(Event);
+        iConomy.getBukkitServer().getPluginManager().callEvent(Event);
         
         if(!Event.isCancelled()) {
             Connection conn = null;
             PreparedStatement ps = null;
 
             try {
-                conn = BetterCoins.getiCoDatabase().getConnection();
+                conn = iConomy.getiCoDatabase().getConnection();
                 ps = conn.prepareStatement("DELETE FROM " + Constants.SQLTable + " WHERE username = ?");
                 ps.setString(1, this.name);
                 ps.executeUpdate();
@@ -412,7 +412,7 @@ public class Account {
                     try { ps.close(); } catch (SQLException ex) { }
 
                 if(conn != null)
-                    BetterCoins.getiCoDatabase().close(conn);
+                    iConomy.getiCoDatabase().close(conn);
             }
         }
     }

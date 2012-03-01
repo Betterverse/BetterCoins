@@ -1,11 +1,11 @@
-package com.bettercoins.system;
+package com.iConomy.system;
 
 import org.bukkit.entity.Player;
 
-import com.bettercoins.BetterCoins;
-import com.bettercoins.util.Constants;
-import com.bettercoins.util.Messaging;
-import com.bettercoins.util.Template;
+import com.iConomy.iConomy;
+import com.iConomy.util.Constants;
+import com.iConomy.util.Messaging;
+import com.iConomy.util.Template;
 
 import java.sql.BatchUpdateException;
 import java.sql.Connection;
@@ -36,7 +36,7 @@ public class Interest extends TimerTask {
         HashMap<String, Integer> bankPlayers = new HashMap<String, Integer>();
 
         if(Constants.InterestOnline) {
-            Player[] player = BetterCoins.getBukkitServer().getOnlinePlayers();
+            Player[] player = iConomy.getBukkitServer().getOnlinePlayers();
             
             if(Constants.InterestType.equalsIgnoreCase("players") || !Constants.Banking) {
                 for(Player p : player) {
@@ -44,7 +44,7 @@ public class Interest extends TimerTask {
                 }
             } else {
                 for(Player p : player) {
-                    Account account = BetterCoins.getAccount(p.getName());
+                    Account account = iConomy.getAccount(p.getName());
                     
                     if(account != null) {
                         for(BankAccount baccount : account.getBankAccounts()) {
@@ -54,7 +54,7 @@ public class Interest extends TimerTask {
                 }
             }
         } else {
-            conn = BetterCoins.getiCoDatabase().getConnection();
+            conn = iConomy.getiCoDatabase().getConnection();
 
             try {
                 if(Constants.InterestType.equalsIgnoreCase("players") || !Constants.Banking)
@@ -108,7 +108,7 @@ public class Interest extends TimerTask {
         }
 
         try {
-            conn = BetterCoins.getiCoDatabase().getConnection();
+            conn = iConomy.getiCoDatabase().getConnection();
             conn.setAutoCommit(false);
 
             if(Constants.InterestType.equalsIgnoreCase("players") || !Constants.Banking) {
@@ -116,7 +116,7 @@ public class Interest extends TimerTask {
                 ps = conn.prepareStatement(updateSQL);
 
                 for (String name : players) {
-                    Account account = BetterCoins.getAccount(name);
+                    Account account = iConomy.getAccount(name);
 
                     if (account != null) {
                         Holdings holdings = account.getHoldings();
@@ -145,19 +145,19 @@ public class Interest extends TimerTask {
 
                             if(Constants.InterestAnn && Constants.InterestOnline) {
                                 Messaging.send(
-                                    BetterCoins.getBukkitServer().getPlayer(name),
+                                    iConomy.getBukkitServer().getPlayer(name),
                                     Template.parse(
                                         "interest.announcement",
                                         new String[]{ "+amount,+money,+interest,+a,+m,+i" },
-                                        new Object[]{ BetterCoins.format(amount) }
+                                        new Object[]{ iConomy.format(amount) }
                                     )
                                 );
                             }
 
                             if(amount < 0.0)
-                                BetterCoins.getTransactions().insert("[System Interest]", name, 0.0, original, 0.0, 0.0, amount);
+                                iConomy.getTransactions().insert("[System Interest]", name, 0.0, original, 0.0, 0.0, amount);
                             else {
-                                BetterCoins.getTransactions().insert("[System Interest]", name, 0.0, original, 0.0, amount, 0.0);
+                                iConomy.getTransactions().insert("[System Interest]", name, 0.0, original, 0.0, amount, 0.0);
                             }
                         }
                     }
@@ -167,7 +167,7 @@ public class Interest extends TimerTask {
                 ps = conn.prepareStatement(updateSQL);
 
                 for (String name : bankPlayers.keySet()) {
-                    Account account = BetterCoins.getAccount(name);
+                    Account account = iConomy.getAccount(name);
 
                     if (account != null) {
                         Holdings holdings = account.getBankHoldings(bankPlayers.get(name));
@@ -197,19 +197,19 @@ public class Interest extends TimerTask {
 
                             if(Constants.InterestAnn && Constants.InterestOnline) {
                                 Messaging.send(
-                                    BetterCoins.getBukkitServer().getPlayer(name),
+                                    iConomy.getBukkitServer().getPlayer(name),
                                     Template.parse(
                                         "interest.announcement",
                                         new String[]{ "+amount,+money,+interest,+a,+m,+i" },
-                                        new Object[]{ BetterCoins.format(amount) }
+                                        new Object[]{ iConomy.format(amount) }
                                     )
                                 );
                             }
 
                             if(amount < 0.0)
-                                BetterCoins.getTransactions().insert("[System Interest]", name, 0.0, original, 0.0, 0.0, amount);
+                                iConomy.getTransactions().insert("[System Interest]", name, 0.0, original, 0.0, 0.0, amount);
                             else {
-                                BetterCoins.getTransactions().insert("[System Interest]", name, 0.0, original, 0.0, amount, 0.0);
+                                iConomy.getTransactions().insert("[System Interest]", name, 0.0, original, 0.0, amount, 0.0);
                             }
                         }
                     }
@@ -232,7 +232,7 @@ public class Interest extends TimerTask {
                 try { ps.close(); } catch (SQLException ex) { }
 
             if(conn != null)
-                BetterCoins.getiCoDatabase().close(conn);
+                iConomy.getiCoDatabase().close(conn);
         }
     }
 }

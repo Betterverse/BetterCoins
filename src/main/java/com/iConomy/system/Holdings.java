@@ -1,11 +1,11 @@
-package com.bettercoins.system;
+package com.iConomy.system;
 
-import com.bettercoins.events.AccountResetEvent;
-import com.bettercoins.events.AccountSetEvent;
-import com.bettercoins.events.AccountUpdateEvent;
-import com.bettercoins.BetterCoins;
-import com.bettercoins.util.Constants;
-import com.bettercoins.util.Misc;
+import com.iConomy.events.AccountResetEvent;
+import com.iConomy.events.AccountSetEvent;
+import com.iConomy.events.AccountUpdateEvent;
+import com.iConomy.iConomy;
+import com.iConomy.util.Constants;
+import com.iConomy.util.Misc;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -52,7 +52,7 @@ public class Holdings {
         Double balance = Constants.Holdings;
 
         try {
-            conn = BetterCoins.getiCoDatabase().getConnection();
+            conn = iConomy.getiCoDatabase().getConnection();
 
             if(this.bankId == 0) {
                 ps = conn.prepareStatement("SELECT * FROM " + Constants.SQLTable + " WHERE username = ? LIMIT 1");
@@ -86,14 +86,14 @@ public class Holdings {
 
     public void set(double balance) {
         AccountSetEvent Event = new AccountSetEvent(this.name, balance);
-        BetterCoins.getBukkitServer().getPluginManager().callEvent(Event);
+        iConomy.getBukkitServer().getPluginManager().callEvent(Event);
 
         Connection conn = null;
         ResultSet rs = null;
         PreparedStatement ps = null;
 
         try {
-            conn = BetterCoins.getiCoDatabase().getConnection();
+            conn = iConomy.getiCoDatabase().getConnection();
 
             if(bankId == 0) {
                 ps = conn.prepareStatement("UPDATE " + Constants.SQLTable + " SET balance = ? WHERE username = ?");
@@ -148,7 +148,7 @@ public class Holdings {
 
     public void reset() {
         AccountResetEvent Event = new AccountResetEvent(this.name);
-        BetterCoins.getBukkitServer().getPluginManager().callEvent(Event);
+        iConomy.getBukkitServer().getPluginManager().callEvent(Event);
 
         if(!Event.isCancelled())
             this.set(Constants.Holdings);
@@ -156,7 +156,7 @@ public class Holdings {
 
     private void math(double amount, double balance, double ending) {
         AccountUpdateEvent Event = new AccountUpdateEvent(this.name, balance, ending, amount);
-        BetterCoins.getBukkitServer().getPluginManager().callEvent(Event);
+        iConomy.getBukkitServer().getPluginManager().callEvent(Event);
 
         if(!Event.isCancelled())
             this.set(ending);

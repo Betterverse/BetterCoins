@@ -1,4 +1,4 @@
-package com.bettercoins.util;
+package com.iConomy.util;
 
 import java.io.File;
 import java.io.IOException;

@@ -1,7 +1,7 @@
-package com.bettercoins.system;
+package com.iConomy.system;
 
-import com.bettercoins.BetterCoins;
-import com.bettercoins.util.Constants;
+import com.iConomy.iConomy;
+import com.iConomy.util.Constants;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -32,7 +32,7 @@ public class Transactions {
         PreparedStatement ps = null;
 
         try {
-            conn = BetterCoins.getiCoDatabase().getConnection();
+            conn = iConomy.getiCoDatabase().getConnection();
             ps = conn.prepareStatement("INSERT INTO " + Constants.SQLTable + "_Transactions(account_from, account_to, account_from_balance, account_to_balance, `timestamp`, `set`, gain, loss) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
 
             for (Object obj : data) {
@@ -49,7 +49,7 @@ public class Transactions {
             if(rs != null)
                 try { rs.close(); } catch (SQLException ex) { }
 
-            BetterCoins.getiCoDatabase().close(conn);
+            iConomy.getiCoDatabase().close(conn);
         }
     }
 }
