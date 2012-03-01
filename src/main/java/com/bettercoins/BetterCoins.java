@@ -1,4 +1,4 @@
-package com.iConomy;
+package com.bettercoins;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -22,18 +22,18 @@ import org.bukkit.Server;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import com.iConomy.entity.Players;
-import com.iConomy.net.Database;
-import com.iConomy.system.Account;
-import com.iConomy.system.Accounts;
-import com.iConomy.system.Bank;
-import com.iConomy.system.Banks;
-import com.iConomy.system.Interest;
-import com.iConomy.util.Constants;
-import com.iConomy.system.Transactions;
-import com.iConomy.util.Downloader;
-import com.iConomy.util.FileManager;
-import com.iConomy.util.Misc;
+import com.bettercoins.entity.Players;
+import com.bettercoins.net.Database;
+import com.bettercoins.system.Account;
+import com.bettercoins.system.Accounts;
+import com.bettercoins.system.Bank;
+import com.bettercoins.system.Banks;
+import com.bettercoins.system.Interest;
+import com.bettercoins.util.Constants;
+import com.bettercoins.system.Transactions;
+import com.bettercoins.util.Downloader;
+import com.bettercoins.util.FileManager;
+import com.bettercoins.util.Misc;
 
 import java.text.DecimalFormat;
 import org.bukkit.ChatColor;
@@ -61,7 +61,7 @@ import org.bukkit.event.server.PluginEnableEvent;
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-public class iConomy extends JavaPlugin {
+public class BetterCoins extends JavaPlugin {
     public static Banks Banks = null;
     public static Accounts Accounts = null;
 
@@ -235,7 +235,7 @@ public class iConomy extends JavaPlugin {
                         Statement stmt = null;
 
                         try {
-                            conn = iConomy.getiCoDatabase().getConnection();
+                            conn = BetterCoins.getiCoDatabase().getConnection();
                             stmt = null;
 
                             System.out.println(" - Updating " + Constants.DatabaseType + " Database for latest iConomy");
@@ -263,7 +263,7 @@ public class iConomy extends JavaPlugin {
                             if(rs != null)
                                 try { rs.close(); } catch (SQLException ex) { }
 
-                            iConomy.getiCoDatabase().close(conn);
+                            BetterCoins.getiCoDatabase().close(conn);
                         }
                     }
                 } else {
@@ -296,7 +296,7 @@ public class iConomy extends JavaPlugin {
                 PreparedStatement ps = null;
 
                 try {
-                    conn = iConomy.getiCoDatabase().getConnection();
+                    conn = BetterCoins.getiCoDatabase().getConnection();
                     DatabaseMetaData dbm = conn.getMetaData();
                     rs = dbm.getTables(null, null, "ibalances", null);
                     ps = null;
@@ -329,7 +329,7 @@ public class iConomy extends JavaPlugin {
                         try { rs.close(); } catch (SQLException ex) { }
 
                     if(conn != null)
-                        iConomy.getiCoDatabase().close(conn);
+                        BetterCoins.getiCoDatabase().close(conn);
                 }
             }
 

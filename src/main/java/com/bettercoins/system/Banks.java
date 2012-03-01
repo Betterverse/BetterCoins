@@ -1,7 +1,7 @@
-package com.iConomy.system;
+package com.bettercoins.system;
 
-import com.iConomy.iConomy;
-import com.iConomy.util.Constants;
+import com.bettercoins.BetterCoins;
+import com.bettercoins.util.Constants;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -33,7 +33,7 @@ public class Banks {
         boolean exists = false;
 
         try {
-            conn = iConomy.getiCoDatabase().getConnection();
+            conn = BetterCoins.getiCoDatabase().getConnection();
             ps = conn.prepareStatement("SELECT * FROM " + Constants.SQLTable + "_Banks WHERE id = ? LIMIT 1");
             ps.setInt(1, id);
             rs = ps.executeQuery();
@@ -70,7 +70,7 @@ public class Banks {
         boolean exists = false;
 
         try {
-            conn = iConomy.getiCoDatabase().getConnection();
+            conn = BetterCoins.getiCoDatabase().getConnection();
             ps = conn.prepareStatement("SELECT * FROM " + Constants.SQLTable + "_Banks WHERE name = ? LIMIT 1");
             ps.setString(1, name);
             rs = ps.executeQuery();
@@ -107,7 +107,7 @@ public class Banks {
         int id = 0;
 
         try {
-            conn = iConomy.getiCoDatabase().getConnection();
+            conn = BetterCoins.getiCoDatabase().getConnection();
             ps = conn.prepareStatement("SELECT id FROM " + Constants.SQLTable + "_Banks WHERE name = ? LIMIT 1");
             ps.setString(1, name);
             rs = ps.executeQuery();
@@ -150,7 +150,7 @@ public class Banks {
             PreparedStatement ps = null;
 
             try {
-                conn = iConomy.getiCoDatabase().getConnection();
+                conn = BetterCoins.getiCoDatabase().getConnection();
                 ps = conn.prepareStatement("INSERT INTO " + Constants.SQLTable + "_Banks(name, major, minor, initial, fee) VALUES (?, ?, ?, ?, ?)");
 
                 ps.setString(1, name);
@@ -189,7 +189,7 @@ public class Banks {
             PreparedStatement ps = null;
 
             try {
-                conn = iConomy.getiCoDatabase().getConnection();
+                conn = BetterCoins.getiCoDatabase().getConnection();
                 ps = conn.prepareStatement("INSERT INTO " + Constants.SQLTable + "_Banks(name, major, minor, initial, fee) VALUES (?, ?, ?, ?, ?)");
 
                 ps.setString(1, name);
@@ -223,7 +223,7 @@ public class Banks {
         int count = -1;
 
         try {
-            conn = iConomy.getiCoDatabase().getConnection();
+            conn = BetterCoins.getiCoDatabase().getConnection();
             ps = conn.prepareStatement("SELECT COUNT(id) AS count FROM " + Constants.SQLTable + "_Banks");
             rs = ps.executeQuery();
 
@@ -259,7 +259,7 @@ public class Banks {
         int count = -1;
 
         try {
-            conn = iConomy.getiCoDatabase().getConnection();
+            conn = BetterCoins.getiCoDatabase().getConnection();
             ps = conn.prepareStatement("SELECT COUNT(id) AS count FROM " + Constants.SQLTable + "_BankRelations WHERE account_name = ?");
             ps.setString(1, name);
             rs = ps.executeQuery();
@@ -295,7 +295,7 @@ public class Banks {
         PreparedStatement ps = null;
 
         try {
-            conn = iConomy.getiCoDatabase().getConnection();
+            conn = BetterCoins.getiCoDatabase().getConnection();
             ps = conn.prepareStatement("SELECT * FROM " + Constants.SQLTable + "_Banks");
             rs = ps.executeQuery();
 
@@ -334,7 +334,7 @@ public class Banks {
         if(!Constants.Banking)
             return false;
 
-        Bank bank = iConomy.getBank(name);
+        Bank bank = BetterCoins.getBank(name);
 
         if(bank != null) {
             return purge(bank.getId());
@@ -353,7 +353,7 @@ public class Banks {
         if(!Constants.Banking)
             return false;
 
-        Bank bank = iConomy.getBank(id);
+        Bank bank = BetterCoins.getBank(id);
 
         if(bank != null) {
             Connection conn = null;
@@ -361,7 +361,7 @@ public class Banks {
             PreparedStatement ps = null;
 
             try {
-                conn = iConomy.getiCoDatabase().getConnection();
+                conn = BetterCoins.getiCoDatabase().getConnection();
                 ps = conn.prepareStatement("DELETE FROM " + Constants.SQLTable + "_BankRelations WHERE bank_id = ? AND holdings = ?");
                 ps.setInt(1, id);
                 ps.setDouble(2, bank.getInitialHoldings());
@@ -433,7 +433,7 @@ public class Banks {
         List<Double> Values = new ArrayList<Double>();
 
         try {
-            conn = iConomy.getiCoDatabase().getConnection();
+            conn = BetterCoins.getiCoDatabase().getConnection();
             ps = conn.prepareStatement("SELECT holdings FROM " + Constants.SQLTable + "_BankRelations");
             rs = ps.executeQuery();
 

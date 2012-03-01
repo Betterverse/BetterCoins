@@ -1,5 +1,5 @@
-name: iConomy
-main: com.iConomy.iConomy
+name: BetterCoins
+main: com.bettercoins.BetterCoins
 version: 5.01
 authors: [Nijikokun]
 commands:
@@ -7,5 +7,5 @@ commands:
         description: Controls account balances and more
         usage:
     bank:
-        description: Control, list, create, and do various bank features.
+        description: Control, list, create, and do various bank features
         usage:

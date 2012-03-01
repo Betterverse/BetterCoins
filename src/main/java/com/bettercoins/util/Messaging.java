@@ -1,9 +1,9 @@
-package com.iConomy.util;
+package com.bettercoins.util;
 
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import com.iConomy.iConomy;
+import com.bettercoins.BetterCoins;
 import org.bukkit.ChatColor;
 
 /**
@@ -189,7 +189,7 @@ public class Messaging {
      * @param message - The message to be sent.
      */
     public static void broadcast(String message) {
-        for (Player p : iConomy.getBukkitServer().getOnlinePlayers()) {
+        for (Player p : BetterCoins.getBukkitServer().getOnlinePlayers()) {
             p.sendMessage(parse(message));
         }
     }

@@ -1,12 +1,12 @@
-package com.iConomy.net;
+package com.bettercoins.net;
 
 import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-import com.iConomy.util.Constants;
-import com.iConomy.util.Misc;
+import com.bettercoins.util.Constants;
+import com.bettercoins.util.Misc;
 import java.sql.DatabaseMetaData;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

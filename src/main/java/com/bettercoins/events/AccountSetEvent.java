@@ -1,4 +1,4 @@
-package com.iConomy.events;
+package com.bettercoins.events;
 
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;

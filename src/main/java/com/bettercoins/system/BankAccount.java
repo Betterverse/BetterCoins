@@ -3,10 +3,10 @@
  * and open the template in the editor.
  */
 
-package com.iConomy.system;
+package com.bettercoins.system;
 
-import com.iConomy.iConomy;
-import com.iConomy.util.Constants;
+import com.bettercoins.BetterCoins;
+import com.bettercoins.util.Constants;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -49,7 +49,7 @@ public class BankAccount {
         PreparedStatement ps = null;
 
         try {
-            conn = iConomy.getiCoDatabase().getConnection();
+            conn = BetterCoins.getiCoDatabase().getConnection();
             ps = conn.prepareStatement("DELETE FROM " + Constants.SQLTable + "_BankRelations WHERE bank_id = ? AND account_name = ?");
             ps.setInt(1, BankId);
             ps.setString(2, AccountName);

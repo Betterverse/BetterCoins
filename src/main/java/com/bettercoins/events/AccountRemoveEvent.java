@@ -1,14 +1,14 @@
-package com.iConomy.events;
+package com.bettercoins.events;
 
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
-public class AccountResetEvent extends Event {
+public class AccountRemoveEvent extends Event {
     private final String account;
     private boolean cancelled = false;
 		private HandlerList handlers = new HandlerList();
 
-    public AccountResetEvent(String account) {
+    public AccountRemoveEvent(String account) {
         this.account = account;
     }
 
@@ -23,14 +23,14 @@ public class AccountResetEvent extends Event {
     public void setCancelled(boolean cancelled) {
         this.cancelled = cancelled;
     }
-		@Override
+
+	@Override
 	public HandlerList getHandlers() {
 		return handlers;
 	}
 
 	@Override
 	public String getEventName() {
-		return "ACCOUNT RESET";
+		return "ACCOUNT REMOVE";
 	}
 }
-

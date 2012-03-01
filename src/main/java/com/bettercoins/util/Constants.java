@@ -1,4 +1,4 @@
-package com.iConomy.util;
+package com.bettercoins.util;
 
 import java.io.File;
 import java.util.ArrayList;

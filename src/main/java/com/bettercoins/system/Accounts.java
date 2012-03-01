@@ -1,7 +1,7 @@
-package com.iConomy.system;
+package com.bettercoins.system;
 
-import com.iConomy.iConomy;
-import com.iConomy.util.Constants;
+import com.bettercoins.BetterCoins;
+import com.bettercoins.util.Constants;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -28,7 +28,7 @@ public class Accounts {
         boolean exists = false;
 
         try {
-            conn = iConomy.getiCoDatabase().getConnection();
+            conn = BetterCoins.getiCoDatabase().getConnection();
             ps = conn.prepareStatement("SELECT * FROM " + Constants.SQLTable + " WHERE username = ? LIMIT 1");
             ps.setString(1, name);
             rs = ps.executeQuery();
@@ -55,7 +55,7 @@ public class Accounts {
         PreparedStatement ps = null;
 
         try {
-            conn = iConomy.getiCoDatabase().getConnection();
+            conn = BetterCoins.getiCoDatabase().getConnection();
             ps = conn.prepareStatement("INSERT INTO " + Constants.SQLTable + "(username, balance, hidden) VALUES (?, ?, 0)");
             ps.setString(1, name);
             ps.setDouble(2, Constants.Holdings);
@@ -79,7 +79,7 @@ public class Accounts {
         PreparedStatement ps = null;
 
         try {
-            conn = iConomy.getiCoDatabase().getConnection();
+            conn = BetterCoins.getiCoDatabase().getConnection();
             ps = conn.prepareStatement("DELETE FROM " + Constants.SQLTable + " WHERE username = ? LIMIT 1");
             ps.setString(1, name);
             ps.executeUpdate();
@@ -102,7 +102,7 @@ public class Accounts {
         PreparedStatement ps = null;
 
         try {
-            conn = iConomy.getiCoDatabase().getConnection();
+            conn = BetterCoins.getiCoDatabase().getConnection();
             ps = conn.prepareStatement("DELETE FROM " + Constants.SQLTable + " WHERE username = ? LIMIT 1");
             ps.setString(1, name);
             ps.executeUpdate();
@@ -131,7 +131,7 @@ public class Accounts {
         PreparedStatement ps = null;
 
         try {
-            conn = iConomy.getiCoDatabase().getConnection();
+            conn = BetterCoins.getiCoDatabase().getConnection();
             ps = conn.prepareStatement("DELETE FROM " + Constants.SQLTable + " WHERE balance = ?");
             ps.setDouble(1, Constants.Holdings);
             ps.executeUpdate();
@@ -159,7 +159,7 @@ public class Accounts {
         Statement ps = null;
 
         try {
-            conn = iConomy.getiCoDatabase().getConnection();
+            conn = BetterCoins.getiCoDatabase().getConnection();
             ps = conn.createStatement();
             ps.execute("TRUNCATE TABLE " + Constants.SQLTable);
         } catch (Exception e) {
@@ -182,7 +182,7 @@ public class Accounts {
         List<Double> Values = new ArrayList<Double>();
 
         try {
-            conn = iConomy.getiCoDatabase().getConnection();
+            conn = BetterCoins.getiCoDatabase().getConnection();
             ps = conn.prepareStatement("SELECT balance FROM " + Constants.SQLTable);
             rs = ps.executeQuery();
 
@@ -209,7 +209,7 @@ public class Accounts {
         LinkedHashMap<String, Double> Ranking = new LinkedHashMap<String, Double>();
 
         try {
-            conn = iConomy.getiCoDatabase().getConnection();
+            conn = BetterCoins.getiCoDatabase().getConnection();
             ps = conn.prepareStatement("SELECT username,balance FROM " + Constants.SQLTable + " WHERE hidden = 0 ORDER BY balance DESC LIMIT ?");
             ps.setInt(1, amount);
             rs = ps.executeQuery();
