@@ -26,9 +26,4 @@ public class AccountSetEvent extends Event {
 	public HandlerList getHandlers() {
 		return handlers;
 	}
-
-	@Override
-	public String getEventName() {
-		return "ACCOUNT SET";
-	}
 }

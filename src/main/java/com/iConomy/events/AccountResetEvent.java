@@ -27,10 +27,4 @@ public class AccountResetEvent extends Event {
 	public HandlerList getHandlers() {
 		return handlers;
 	}
-
-	@Override
-	public String getEventName() {
-		return "ACCOUNT RESET";
-	}
 }
-

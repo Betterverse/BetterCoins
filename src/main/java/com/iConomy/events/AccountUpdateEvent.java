@@ -19,11 +19,6 @@ public class AccountUpdateEvent extends Event {
 		this.amount = amount;
 	}
 
-	@Override
-	public String getEventName() {
-		return "ACCOUNT UPDATE";
-	}
-
 	public String getAccountName() {
 		return account;
 	}
