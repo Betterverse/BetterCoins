@@ -111,9 +111,6 @@ public class iConomy extends JavaPlugin {
         }
 
         if(Misc.is(Constants.DatabaseType, new String[] { "sqlite", "h2", "h2sql", "h2db" })) {
-            if(!(new File("lib" + File.separator, "h2.jar").exists())) {
-                Downloader.install(Constants.H2_Jar_Location, "h2.jar");
-            }
         } else {
             if(!(new File("lib" + File.separator, "mysql-connector-java-bin.jar").exists())) {
                 Downloader.install(Constants.MySQL_Jar_Location, "mysql-connector-java-bin.jar");
